@@ -60,3 +60,13 @@ app.get(
     }
 );*/
 /*Fin query params */
+
+app.post(
+    "/api/users",
+    (request, response)=>{
+        const { body } = request;
+        const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...body };
+        mockUsers.push(newUser);
+        return response.status(200).send(newUser);
+    }
+);
