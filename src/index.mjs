@@ -2,6 +2,7 @@ import express from "express";
 import 'dotenv/config';
 import {findAvailablePosrt} from './utils/port.mjs';
 import mongoose from "mongoose";
+import { mockUsers } from "./utils/constants.mjs";
 
 const app = express();
 
@@ -20,3 +21,11 @@ findAvailablePosrt(desiredPort)
             console.log(`Server listen on http://localhost:${port}`);
         })
     });
+
+app.get( 
+    '/v0/users',
+    ( request, response )=>{
+        console.log(`Llamada a la ruta: /v0/users`);
+        return response.status(200).send( mockUsers );
+    }
+ );
