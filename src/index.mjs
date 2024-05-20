@@ -1,6 +1,6 @@
 import express from "express";
 import 'dotenv/config';
-import {findAvailablePosrt} from '../utils/port.mjs'
+import {findAvailablePosrt} from './utils/port.mjs';
 import mongoose from "mongoose";
 
 const app = express();
