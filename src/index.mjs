@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import { mockUsers } from "./utils/constants.mjs";
 import "dotenv/config"
 
@@ -15,6 +15,20 @@ const logginMiddleware = (request, response, next)=>{
     next();
 }
 
+const resolveIndexByUserId = (request, response, next)=>{
+    const{
+        body,
+        params: { id },
+    } = request;
+    const paramID = parseInt( id );
+    if( isNaN(paramID) ) return response.sendStatus(400);
+    const findUserIndex = mockUsers.findIndex( (user)=>user.id===paramID );
+    if(findUserIndex === -1) return response.sendStatus(404);
+    request.findUserIndex = findUserIndex;
+    next();
+};
+
+
 //De la siguiente manera se puede usar el middleware en todas las peticiones
 //->app.use(logginMiddleware);
 
@@ -30,7 +44,7 @@ app.get(
         }=request;
         if(filter && value) return response.send(
                 mockUsers.filter( (user)=>user[filter].includes(value) )
-            );        
+            );
         return response.send(mockUsers);
     }
 );
@@ -63,16 +77,10 @@ app.post(
 //Modifica por completo todos los datos del registro
 app.put(
     '/v0/users/:id',
+    resolveIndexByUserId,
     (request, response)=>{
-        const { 
-            body, 
-            params:{id} 
-        } = request;
-        const paramID = parseInt(id);
-        if( isNaN(paramID) ) return response.sendStatus(400);
-        const findUserIndex = mockUsers.findIndex( (user)=>user.id===paramID );;
-        if(findUserIndex===-1) return response.sendStatus(404);
-        mockUsers[findUserIndex] = { id:paramID, ...body };
+        const { body, findUserIndex } = request;
+        mockUsers[findUserIndex] = { id:mockUsers[findUserIndex].id, ...body };
         return response.sendStatus(200);
     }
 );
@@ -81,16 +89,9 @@ app.put(
 //o agrega un campo nuevo
 app.patch(
     '/v0/users/:id',
+    resolveIndexByUserId,
     (request, response)=>{
-        const {
-            body,
-            params:{id}
-        } = request;
-        const paramID = parseInt(id);
-
-        if(isNaN(paramID)) return response.sendStatus(400);
-        const findUserIndex = mockUsers.findIndex( (user)=>user.id===paramID );
-        if( findUserIndex===-1 ) return response.sendStatus(404);
+        const { body, findUserIndex } = request;
         mockUsers[findUserIndex] = {...mockUsers[findUserIndex], ...body};
         return response.sendStatus(200);
     }
