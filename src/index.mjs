@@ -1,4 +1,5 @@
 import express, { response } from "express";
+import{query, validationResult} from "express-validator";
 import { mockUsers } from "./utils/constants.mjs";
 import "dotenv/config"
 
@@ -28,17 +29,21 @@ const resolveIndexByUserId = (request, response, next)=>{
     next();
 };
 
+app.get('/v0/', (req, res)=>res.send({msg:'Hello'}));
 
 //De la siguiente manera se puede usar el middleware en todas las peticiones
 //->app.use(logginMiddleware);
-
 
 //Ejemplo con query paramas
 //EL middleware tambien se puede usar dentro de la petición, como segundo parámetro
 app.get(
     '/v0/users',
-    logginMiddleware,
+    /*logginMiddleware,*/
+    query("filter").isString().notEmpty().isLength({min:3,max:5}),
     (request, response)=>{
+        const resValidate = validationResult(request);
+        if( resValidate.isEmpty ) return response.status(404).send(resValidate);
+
         const  {
             query: {filter, value}
         }=request;
