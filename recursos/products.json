@@ -1,0 +1,49 @@
+{
+    "nombre_comercial": "Paracetamol",
+    "nombre_generico": "Acetaminofén",
+    "codigo_producto": "PARA123",
+    "descripcion": "Medicamento para el alivio del dolor y la fiebre.",
+    "ingredientes_activos": [
+      {
+        "nombre": "Paracetamol",
+        "concentracion": "500mg"
+      }
+    ],
+    "excipientes": [
+      {
+        "nombre": "Almidón de maíz",
+        "cantidad": "10mg"
+      }
+    ],
+    "fabricante": {
+      "nombre": "Laboratorios XYZ",
+      "direccion": "Calle 123, Ciudad, País"
+    },
+    "numero_lote": "LOT20230601",
+    "fecha_fabricacion": "2023-06-01",
+    "fecha_expiracion": "2025-06-01",
+    "numero_registro_sanitario": "RS-123456",
+    "certificaciones": [
+      "ISO 9001",
+      "GMP"
+    ],
+    "proveedor": "Distribuidora ABC",
+    "condiciones_almacenamiento": "Almacenar a temperatura ambiente, entre 15 y 25 grados Celsius.",
+    "cantidad_stock": 100,
+    "ubicacion_almacen": "Estante 5, Sección B",
+    "indicaciones": "Para el alivio del dolor leve a moderado y la fiebre.",
+    "contraindicaciones": "No usar en personas con alergia al paracetamol.",
+    "efectos_secundarios": [
+      "Náuseas",
+      "Erupciones cutáneas"
+    ],
+    "dosificacion": "Adultos: 500mg cada 6-8 horas.",
+    "instrucciones_uso": "Tomar con agua.",
+    "precauciones": "No exceder la dosis recomendada.",
+    "precio_compra": 0.50,
+    "precio_venta": 1.00,
+    "proveedor_secundario": "Distribuidora DEF",
+    "notas_adicionales": "Mantener fuera del alcance de los niños.",
+    "imagen_producto": "http://example.com/imagenes/paracetamol.jpg",
+    "manual_informacion": "http://example.com/manuales/paracetamol.pdf"
+  } 
