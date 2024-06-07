@@ -13,6 +13,15 @@ router.get(
     }
 );
 
+//Get user by id
+router.get(
+    '/v0/users/:id',
+    resolveIndexByUserId,
+    (request, response)=>{
+        response.send(mockUsers[parseInt(request.findUserIndex)]);
+    }
+);
+
 router.get(
     '/v0/users',
     query("filter").isString().notEmpty().withMessage('Must not be empty')
@@ -24,7 +33,7 @@ router.get(
 
         const  {
             query: {filter, value}
-        }=request;
+        } = request;
         if(filter && value) return response.send(
                 mockUsers.filter( (user)=>user[filter].includes(value) )
             );
@@ -72,28 +81,11 @@ router.patch(
 
 router.delete(
     '/v0/users/:id',
+    resolveIndexByUserId,
     (request, response)=>{
-        const { params:{id} } = request;
-        const paramID = parseInt(id);
-        if( isNaN(paramID) ) return response.sendStatus(400);
-        const findUserIndex = mockUsers.findIndex( (user)=>user.id===paramID );
-        if(findUserIndex===-1) return response.sendStatus(404);
+        const {body, findUserIndex} = request;
         mockUsers.splice(findUserIndex, 1);
         return response.sendStatus(200);
-    }
-);
-
-//Get user by id
-router.get(
-    '/v0/users/:id',
-    (request, response)=>{
-        const paramID = parseInt( request.params.id );
-        if (isNaN(paramID)) return response.status(400).send({msg:"Bad request"})
-        
-        const findUser = mockUsers.find( (user)=>user.id===paramID );
-        if( !findUser ) return response.status(400).send({msg:"User not foud"})
-
-        return response.status(201).send(findUser);
     }
 );
 

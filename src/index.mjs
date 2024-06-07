@@ -24,7 +24,3 @@ app.get('/v0/', (req, res)=>res.send({msg:'Hello'}));
 
 //Ejemplo con query paramas
 //EL middleware tambien se puede usar dentro de la petición, como segundo parámetro
-
-
-
-

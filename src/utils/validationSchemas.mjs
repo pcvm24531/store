@@ -74,3 +74,80 @@ export const createUserValidationSchema = {
         }
     }
 }
+
+export const createProductsValidationSchema = {
+    comercialName:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        },
+        isLength:{
+            options:{min:5, max:50},
+            errorMessage:"Este campo debe contener entre 5 - 50 caracteres."
+        }
+    },
+    genericName:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        },
+        isLength:{
+            options:{min:5, max:50},
+            errorMessage:"Este campo debe contener entre 5 - 50 caracteres."
+        }
+    },
+    productCode:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        },
+        isLength:{
+            options:{min:5, max:20},
+            errorMessage:"Este campo debe contener entre 5 - 20 caracteres."
+        }
+    },
+    description:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        },
+        isLength:{
+            options:{min:5, max:250},
+            errorMessage:"Este campo debe contener entre 5 - 250 caracteres."
+        }
+    },
+    provider:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        },
+        isLength:{
+            options:{min:3, max:100},
+            errorMessage:"Este campo debe contener entre 5 - 100 caracteres."
+        }
+    },
+    storageConditions:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        },
+        isLength:{
+            options:{min:5, max:100},
+            errorMessage:"Este campo debe contener entre 5 - 100 caracteres."
+        }
+    },
+    stock:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        }
+    },
+    locationStore:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        }
+    },
+    purchasePrice:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        }
+    },
+    salePrice:{
+        notEmpty:{
+            errorMessage:"Este campo no puede estar vacío."
+        }
+    },
+}

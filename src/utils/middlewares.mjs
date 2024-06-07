@@ -1,3 +1,5 @@
+import { mockUsers,mockProducts } from "./constants.mjs";
+
 export const resolveIndexByUserId = (request, response, next)=>{
     const{
         body,
@@ -10,3 +12,17 @@ export const resolveIndexByUserId = (request, response, next)=>{
     request.findUserIndex = findUserIndex;
     next();
 };
+
+export const resolveIndexByProductsId = (request, response, next)=>{
+    const {
+        body,
+        params:{id}
+    } = request;
+    const productID = parseInt( id );
+    if( isNaN(productID) ) return response.status(400).send({msg:"bad request"});
+
+    const findProductIndex = mockProducts.findIndex( (product)=>product.id===productID );
+    if( findProductIndex === -1 ) return response.status(403).send({msg:"not found"});
+    request.findProductIndex = findProductIndex;
+    next();
+}
