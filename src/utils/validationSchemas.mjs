@@ -29,7 +29,7 @@ export const createUserValidationSchema = {
             errorMessage:"Este campo debe contener entre 5 - 15 caracteres."
         },
     },
-    username:{
+    userName:{
         isLength:{
             options:{min:5, max:15},
             errorMessage:"Este campo debe contener entre 5 - 15 caracteres.",
@@ -72,7 +72,20 @@ export const createUserValidationSchema = {
         notEmpty:{
             errorMessage:"Este campo no puede estar vacío."
         }
-    }
+    },
+    email:{
+        isString:{
+            errorMessage:"Este campo solo puede contener letras"
+        }
+    },
+    emergencyContactName:{
+        isString:{
+            errorMessage:"Este campo solo puede contener letras"
+        }
+    },
+    emergencyContactPhone:{},
+    registrationDate:{},
+    address: {}
 }
 
 export const createProductsValidationSchema = {

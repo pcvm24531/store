@@ -3,6 +3,7 @@ import { query, validationResult, checkSchema, matchedData } from "express-valid
 import { createUserValidationSchema } from "../utils/validationSchemas.mjs";
 import { resolveIndexByUserId } from "../utils/middlewares.mjs";
 import { mockUsers } from "../utils/constants.mjs";
+import { User } from "../mongoose/schemas/user.mjs";
 
 const router = Router();
 
@@ -44,15 +45,20 @@ router.get(
 router.post(
     '/v0/users',
     checkSchema(createUserValidationSchema),
-    ( request, response )=>{
+    async ( request, response )=>{
         const result = validationResult(request);
 
         if( !result.isEmpty() ){ return response.status(400).send({errors: result.array()}); }
 
-        const data = matchedData(request);
-        const newUser = { id:mockUsers[mockUsers.length-1].id+1, ...data };
-        mockUsers.push(newUser);
-        return response.status(200).send(newUser);
+        const body = matchedData(request);
+        const newUser = new User(body);
+        try {
+            const savedUser = await newUser.save();
+            return response.status(201).send(savedUser);
+        } catch (error) {
+            console.log(error);
+            return response.status(400);
+        }        
     }
 );
 
@@ -68,7 +74,6 @@ router.put(
 );
 
 //PATCH actualiza específicamente el campo sin tocar los otros campos
-//o agrega un campo nuevo
 router.patch(
     '/v0/users/:id',
     resolveIndexByUserId,
