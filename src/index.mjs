@@ -2,14 +2,33 @@ import express, { response } from "express";
 import "dotenv/config"
 import routes from "./routes/index.mjs";
 import { mongoose } from "mongoose";
+import hbs from "express-handlebars";
+import passport from "passport";
+import localStrategy from "passport-local";
+import bcrypt from "bcrypt";
+import session from "express-session";
 
 const app = express();
 
 const DB_URI = process.env.DB_URI;
 mongoose
-    .connect(DB_URI)
+    .connect(DB_URI, {useNewUrlParser:true, useUnifiedTopoLogy:true})
     .then( ()=>console.log('DB Conectado!') )
     .catch( (err)=>console.log(`Error:${err}`) );
+
+app.engine('hbs', (hbs)=>{extname:'.hbs'});
+app.set('view engine', 'handlebars');
+//app.use( express.static(__dirname)+'public' );
+app.use(
+    session({
+        secret:"veryGoodSecret",
+        revase:false,
+        saveUnitInitialized:true
+    })
+);
+app.use(express.urlencoded({extended: false}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use(routes);
@@ -17,7 +36,11 @@ app.use(routes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
     console.log(`Runnin on port ${PORT}`);
-})
+});
+
+passport.serializeUser( (user, done)=>{
+    done(null, user.id)
+} );
 
 //Creación middleware
 const logginMiddleware = (request, response, next)=>{

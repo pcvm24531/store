@@ -1,5 +1,6 @@
 import { mockUsers,mockProducts } from "./constants.mjs";
 
+//Buscar usuario por id
 export const resolveIndexByUserId = (request, response, next)=>{
     const{
         body,
@@ -13,6 +14,7 @@ export const resolveIndexByUserId = (request, response, next)=>{
     next();
 };
 
+//buscar product por id
 export const resolveIndexByProductsId = (request, response, next)=>{
     const {
         body,
