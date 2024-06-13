@@ -7,6 +7,7 @@ import passport from "passport";
 import localStrategy from "passport-local";
 import bcrypt from "bcrypt";
 import session from "express-session";
+import { User } from "./mongoose/schemas/user.mjs";
 
 const app = express();
 
@@ -27,20 +28,43 @@ app.use(
     })
 );
 app.use(express.urlencoded({extended: false}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(express.json());
 app.use(routes);
+
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser( (user, done)=>{
+    done(null, user.id)
+} );
+passport.deserializeUser( (id, done)=>{
+    User.findById(id, (err, user)=>{
+        done(err, user);
+    });
+} );
+passport.use( new localStrategy( (userName, passport, done)=>{
+    User.findOne( 
+        {userName: userName},
+        (err, user)=>{
+            if( err ) return done(err);
+            if( !user ) return done(null, false,{ message:'Usuario incorrecto!' });
+
+            bcrypt.compare( password, user.password, (err, res)=>{
+                if(err) return done(err);
+                if( res===false ) return done(null, false, {message:'Contraseña imcorrecta!'});
+                return done(nul, user);
+            } );
+        }
+     );
+} ) );
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
     console.log(`Runnin on port ${PORT}`);
 });
 
-passport.serializeUser( (user, done)=>{
-    done(null, user.id)
-} );
+
 
 //Creación middleware
 const logginMiddleware = (request, response, next)=>{
