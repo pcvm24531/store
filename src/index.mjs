@@ -8,8 +8,13 @@ import localStrategy from "passport-local";
 import bcrypt from "bcrypt";
 import session from "express-session";
 import { User } from "./mongoose/schemas/user.mjs";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const DB_URI = process.env.DB_URI;
 mongoose
@@ -18,8 +23,8 @@ mongoose
     .catch( (err)=>console.log(`Error:${err}`) );
 
 app.engine('hbs', (hbs)=>{extname:'.hbs'});
-app.set('view engine', 'handlebars');
-//app.use( express.static(__dirname)+'public' );
+app.set('view engine', 'hbs');
+app.set('views',path.join(__dirname,'views'));
 app.use(
     session({
         secret:"veryGoodSecret",
@@ -37,7 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser( (user, done)=>{
     done(null, user.id)
-} );
+} )
 passport.deserializeUser( (id, done)=>{
     User.findById(id, (err, user)=>{
         done(err, user);
