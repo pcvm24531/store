@@ -77,7 +77,7 @@ const logginMiddleware = (request, response, next)=>{
     next();
 }
 
-app.get('/v0/', (req, res)=>res.send({msg:'Hello'}));
+//app.get('/v0/', (req, res)=>res.send({msg:'Hello, Pablo'}));
 
 //De la siguiente manera se puede usar el middleware en todas las peticiones
 //->app.use(logginMiddleware);
