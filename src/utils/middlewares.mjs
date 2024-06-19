@@ -28,3 +28,8 @@ export const resolveIndexByProductsId = (request, response, next)=>{
     request.findProductIndex = findProductIndex;
     next();
 }
+
+export const isLoggedIn = ( request, response, next )=>{
+    if( request.isAuthenticated() ) return next();
+    response.redirect('/login');
+}

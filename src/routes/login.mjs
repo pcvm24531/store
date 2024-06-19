@@ -3,11 +3,9 @@ import { Router } from "express";
 const router = Router();
 
 router.get(
-    '/v0',
+    '/v0/login',
     (request, response)=>{
-        //response.status(200).render('index', {msg:'This is home'});
-        response.status(200).send('Hola, pcvm');
-
+        response.status(200).render('login', {tittle:'Login'});
     }
 );
 export default router;

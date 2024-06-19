@@ -2,19 +2,20 @@ import express, { response } from "express";
 import "dotenv/config"
 import routes from "./routes/index.mjs";
 import { mongoose } from "mongoose";
-import hbs from "express-handlebars";
+import {engine} from "express-handlebars";
 import passport from "passport";
 import localStrategy from "passport-local";
 import bcrypt from "bcrypt";
 import session from "express-session";
 import { User } from "./mongoose/schemas/user.mjs";
-import path, { dirname } from "path";
+import path, { dirname, extname } from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+console.log('DirName:',__dirname);
 
 const DB_URI = process.env.DB_URI;
 mongoose
@@ -22,9 +23,10 @@ mongoose
     .then( ()=>console.log('DB Conectado!') )
     .catch( (err)=>console.log(`Error:${err}`) );
 
-app.engine('hbs', (hbs)=>{extname:'.hbs'});
+app.engine('hbs', engine({extname:'.hbs'}));
 app.set('view engine', 'hbs');
 app.set('views',path.join(__dirname,'views'));
+app.use(express.static(__dirname+'/public'));
 app.use(
     session({
         secret:"veryGoodSecret",
@@ -42,7 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser( (user, done)=>{
     done(null, user.id)
-} )
+} );
 passport.deserializeUser( (id, done)=>{
     User.findById(id, (err, user)=>{
         done(err, user);
@@ -77,7 +79,7 @@ const logginMiddleware = (request, response, next)=>{
     next();
 }
 
-//app.get('/v0/', (req, res)=>res.send({msg:'Hello, Pablo'}));
+app.get('/v0/', (req, res)=>res.render('index', {tittle:'Store'}));
 
 //De la siguiente manera se puede usar el middleware en todas las peticiones
 //->app.use(logginMiddleware);
