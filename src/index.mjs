@@ -31,7 +31,10 @@ app.use(
     session({
         secret:"veryGoodSecret",
         revase:false,
-        saveUnitInitialized:true
+        saveUnitInitialized:true,
+        cookie:{
+            maxAge: 60000 * 60,            
+        }
     })
 );
 app.use(express.urlencoded({extended: false}));
@@ -79,7 +82,15 @@ const logginMiddleware = (request, response, next)=>{
     next();
 }
 
-app.get('/v0/', (req, res)=>res.render('index', {tittle:'Store'}));
+app.get(
+    '/v0/',
+    (request, response)=>{
+        /*console.log(request.session);
+        console.log(request.session.id);
+        request.session.visited = true;*/
+        response.render('index', {tittle:'Store'})
+    }
+);
 
 //De la siguiente manera se puede usar el middleware en todas las peticiones
 //->app.use(logginMiddleware);
