@@ -4,13 +4,20 @@ import { createUserValidationSchema } from "../utils/validationSchemas.mjs";
 import { resolveIndexByUserId } from "../utils/middlewares.mjs";
 import { mockUsers } from "../utils/constants.mjs";
 import { User } from "../mongoose/schemas/user.mjs";
+import { hashPassword } from "../utils/helpers.mjs";
 
 const router = Router();
 
 router.get(
     '/v0/users',
-    ( request, response )=>{
-        response.status(200).send(mockUsers);
+    async ( request, response )=>{
+        const users = await User.find();
+        try {
+            response.status(200).send(users);
+        } catch (error) {
+            console.log( `Error: ${error}` );
+            response.status(500).send('Error al obtener usuarios!');
+        }        
     }
 );
 
@@ -18,7 +25,7 @@ router.get(
 router.get(
     '/v0/users/:id',
     resolveIndexByUserId,
-    (request, response)=>{
+    async (request, response)=>{
         response.send(mockUsers[parseInt(request.findUserIndex)]);
     }
 );
@@ -51,9 +58,12 @@ router.post(
         if( !result.isEmpty() ){ return response.status(400).send({errors: result.array()}); }
 
         const body = matchedData(request);
+        body.password = hashPassword(body.password);
         const newUser = new User(body);
+
         try {
             const savedUser = await newUser.save();
+            console.log(savedUser);
             return response.status(201).send(savedUser);
         } catch (error) {
             console.log(error);
