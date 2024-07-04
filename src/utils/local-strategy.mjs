@@ -3,11 +3,25 @@ import { Strategy } from "passport-local";
 import { User } from "../mongoose/schemas/user.mjs";
 import { comparePassword } from "./helpers.mjs";
 
+export default passport.use(
+    new Strategy( (username, password, done)=>{
+        try {
+            const findUser = User.find((user)=>user.userName===username);
+            if(!findUser) throw new Error('Usuario no encontrado');
+            if(findUser.password !==password) throw new Error('Contraseña inválida');
+            done( null, findUser );
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            done(error, null)
+        }
+    })
+);
+
 passport.serializeUser(
     (user, done)=>{
         console.log(`Dentro de SerializeUser`);
         console.log(user);
-        done(null, user.id)
+        done(null, user.id);
     }
 );
 
@@ -23,19 +37,4 @@ passport.deserializeUser(
             done(error, null)
         }
     }
-);
-
-export default passport.use(
-    new Strategy( 
-        async (userName, password, done)=>{
-            try{
-                const findUser = await User.findOne({userName});
-                if( !findUser ) throw new Error("Usuario no encontrado");
-                if( !comparePassword(password, findUser.password) ) throw new Error("Usuario o Contraseña incorrectos!");
-                done(null, findUser);
-            }catch(err){
-                done( err, null );
-            }
-        } 
-    )
 );

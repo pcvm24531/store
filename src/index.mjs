@@ -33,7 +33,7 @@ app.use(
         revase:false,
         saveUnitInitialized:true,
         cookie:{
-            maxAge: 60000 * 60,            
+            maxAge: 60000 * 60,
         }
     })
 );
