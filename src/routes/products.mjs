@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {mockProducts} from "../utils/constants.mjs";
+import { Products } from "../mongoose/schemas/products.mjs"
 import { resolveIndexByProductsId, resolveIndexByUserId } from "../utils/middlewares.mjs";
 import { createProductsValidationSchema } from "../utils/validationSchemas.mjs";
 import { checkSchema, matchedData, validationResult } from "express-validator";
@@ -9,8 +9,14 @@ const router = Router();
 
 router.get(
     '/v0/products',
-    (request, response)=>{
-        response.status(200).send(mockProducts);
+    async (request, response)=>{
+        const products = await Products.find();
+        try {
+            response.status(200).send(products);
+        } catch (error) {
+            console.log(`Error:${error}`);
+            response.status(500).send('Error al obtener usuarios!');
+        }
     }
 );
 router.get(
