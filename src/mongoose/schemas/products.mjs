@@ -23,19 +23,19 @@ const ProductSchema = new mongoose.Schema(
             requided: true,
         },
         storageConditions:{
-            type:mongoose.Schema.Types.String,
+            type: mongoose.Schema.Types.String,
         },
         stock:{
             type: mongoose.Schema.Types.Number,
         },
         locationStore:{
-            type: mongoose.Schema.String,
+            type: mongoose.Schema.Types.String,
         },
         purchasePrice:{
-            type: mongoose.Schema.Types.Double,
+            type: mongoose.Schema.Types.Number,
         },
         salePrice:{
-            type: mongoose.Schema.Types.Double,
+            type: mongoose.Schema.Types.Number,
             required: true,
         }
     }
