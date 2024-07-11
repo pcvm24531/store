@@ -1,20 +1,21 @@
 import { Router } from "express";
 import { User } from "../mongoose/schemas/user.mjs";
-import { mockUsers } from "../utils/constants.mjs";
 
 const router = Router();
 
-router.get(
+router.post(
     '/v0/auth',
-    (request, response)=>{
+    async (request, response)=>{
         const{ 
             body:{
                 username,
                 password
             } 
         } = request;
-        //console.log(User);
-        const findUser = mockUsers.find( (user)=> user.userName===username );
+        //const findUser = await User.find( (user)=> user.userName===username );
+        const users = await User.find();
+        const findUser = users.find( (user)=>user.userName===username );
+        console.log(findUser);
         if( !findUser || findUser.password !== password) return response.status(401).send({msg:"Bad credential"});
 
         request.session.user = findUser;

@@ -1,5 +1,5 @@
-import express, { response } from "express";
-import "dotenv/config"
+import express from "express";
+import "dotenv/config";
 import routes from "./routes/index.mjs";
 import { mongoose } from "mongoose";
 import {engine} from "express-handlebars";
@@ -8,7 +8,7 @@ import localStrategy from "passport-local";
 import bcrypt from "bcrypt";
 import session from "express-session";
 import { User } from "./mongoose/schemas/user.mjs";
-import path, { dirname, extname } from "path";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
@@ -30,8 +30,8 @@ app.use(express.static(__dirname+'/public'));
 app.use(
     session({
         secret:"veryGoodSecret",
-        revase:false,
         saveUnitInitialized:true,
+        revase:false,
         cookie:{
             maxAge: 60000 * 60,
         }
@@ -73,8 +73,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
     console.log(`Runnin on port ${PORT}`);
 });
-
-
 
 //Creación middleware
 const logginMiddleware = (request, response, next)=>{

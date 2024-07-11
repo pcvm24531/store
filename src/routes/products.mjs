@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { Products } from "../mongoose/schemas/products.mjs"
-import { resolveIndexByProductsId, resolveIndexByUserId } from "../utils/middlewares.mjs";
+import { query, validationResult, checkSchema, matchedData } from "express-validator";
 import { createProductsValidationSchema } from "../utils/validationSchemas.mjs";
-import { checkSchema, matchedData, validationResult } from "express-validator";
+import { resolveIndexByProductsId } from "../utils/middlewares.mjs";
+import { Product } from "../mongoose/schemas/product.mjs";
+
 
 const router = Router();
 
@@ -10,7 +11,7 @@ const router = Router();
 router.get(
     '/v0/products',
     async (request, response)=>{
-        const products = await Products.find();
+        const products = await Product.find();
         try {
             response.status(200).send(products);
         } catch (error) {

@@ -1,4 +1,5 @@
 import { User } from "../mongoose/schemas/user.mjs";
+import { Product } from "../mongoose/schemas/product.mjs"
 import { mockUsers,mockProducts } from "./constants.mjs";
 
 //Buscar usuario por id

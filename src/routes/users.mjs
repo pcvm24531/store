@@ -16,7 +16,7 @@ router.get(
         } catch (error) {
             console.log( `Error: ${error}` );
             response.status(500).send('Error al obtener usuarios!');
-        }        
+        }
     }
 );
 
