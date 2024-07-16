@@ -5,10 +5,13 @@ import { comparePassword } from "./helpers.mjs";
 
 export default passport.use(
     new Strategy( (username, password, done)=>{
+        console.log(`Username: ${username}`);
+        console.log(`Password: ${password}`);
         try {
             const findUser = User.find((user)=>user.userName===username);
             if(!findUser) throw new Error('Usuario no encontrado');
-            if(findUser.password !==password) throw new Error('Contraseña inválida');
+            if(findUser.password !==password) 
+                throw new Error('Contraseña inválida');
             done( null, findUser );
         } catch (error) {
             console.log(`Error: ${error}`);

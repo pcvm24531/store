@@ -3,7 +3,7 @@ import loginRouter from "./login.mjs";
 import usersRouter from "./users.mjs";
 import productsRouter from "./products.mjs";
 import authRouter from "./auth.mjs";
-import { cartRouter } from "./cart.mjs";
+import cartRouter from "./cart.mjs";
 
 const router = Router();
 router.use(loginRouter);
