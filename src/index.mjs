@@ -3,11 +3,7 @@ import "dotenv/config";
 import routes from "./routes/index.mjs";
 import { mongoose } from "mongoose";
 import {engine} from "express-handlebars";
-import passport from "passport";
-import localStrategy from "passport-local";
-import bcrypt from "bcrypt";
 import session from "express-session";
-import { User } from "./mongoose/schemas/user.mjs";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -23,6 +19,7 @@ mongoose
     .then( ()=>console.log('DB Conectado!') )
     .catch( (err)=>console.log(`Error:${err}`) );
 
+    //Middleware
 app.engine('hbs', engine({extname:'.hbs'}));
 app.set('view engine', 'hbs');
 app.set('views',path.join(__dirname,'views'));
@@ -42,34 +39,6 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(routes);
 
-//passport
-/*app.use(passport.initialize());
-app.use(passport.session());
-passport.serializeUser( (user, done)=>{
-    done(null, user.id)
-} );
-passport.deserializeUser( (id, done)=>{
-    User.findById(id, (err, user)=>{
-        done(err, user);
-    });
-} );
-passport.use( new localStrategy( (userName, passport, done)=>{
-    User.findOne( 
-        {userName: userName},
-        (err, user)=>{
-            if( err ) return done(err);
-            if( !user ) return done(null, false,{ message:'Usuario incorrecto!' });
-
-            bcrypt.compare( password, user.password, (err, res)=>{
-                if(err) return done(err);
-                if( res===false ) return done(null, false, {message:'Contraseña imcorrecta!'});
-                return done(nul, user);
-            } );
-        }
-     );
-} ) );
-*/
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
@@ -83,11 +52,8 @@ const logginMiddleware = (request, response, next)=>{
 }
 
 app.get(
-    '/v0/',
+    '/v0',
     (request, response)=>{
-        /*console.log(request.session);
-        console.log(request.session.id);
-        request.session.visited = true;*/
         response.render('index', {tittle:'Store'})
     }
 );

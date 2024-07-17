@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import { User } from "../mongoose/schemas/user.mjs";
-import { comparePassword } from "./helpers.mjs";
+import bcrypt from "bcrypt";
 
 export default passport.use(
     new Strategy( async (username, password, done)=>{
@@ -9,12 +9,18 @@ export default passport.use(
         console.log(`Password: ${password}`);
         try {
             const users = await User.find();
-            const findUser = users.find( (user)=>user.userName===username );
+            const user = users.find( (user)=>user.userName===username );
 
-            if(!findUser) throw new Error('Usuario no encontrado');
-            if(findUser.password !==password) 
-                throw new Error('Contraseña inválida');
-            done( null, findUser );
+            if(!user) throw new Error('Usuario no encontrado');
+
+            /*if(findUser.password !==password) 
+                throw new Error('Contraseña inválida');*/
+            bcrypt.compare(password, user.password, (err, res)=>{
+                if( err ) return done(err);
+                if( res === false ) return done(null, false, {msg:'Contraseña incorrecta'});
+
+                done( null, user );
+            });
         } catch (error) {
             console.log(`Error: ${error}`);
             done(error, null)
@@ -40,7 +46,7 @@ passport.deserializeUser(
             if( !findUser ) throw new Error("Usuario no encontrado");
             done( null, findUser );
         } catch (error) {
-            done(error, null)
+            done(error, null);
         }
     }
 );
