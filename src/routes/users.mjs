@@ -52,13 +52,14 @@ router.post(
     '/v0/users',
     checkSchema(createUserValidationSchema),
     async ( request, response )=>{
+        //Obtenemos el resultado del schema de validadción
         const result = validationResult(request);
 
         if( !result.isEmpty() ){ return response.status(400).send({errors: result.array()}); }
 
-        const body = matchedData(request);
-        body.password = hashPassword(body.password);
-        const newUser = new User(body);
+        const data = matchedData(request);
+        data.password = hashPassword(data.password);
+        const newUser = new User(data);
 
         try {
             const savedUser = await newUser.save();
