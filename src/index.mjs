@@ -6,6 +6,7 @@ import {engine} from "express-handlebars";
 import session from "express-session";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -31,7 +32,10 @@ app.use(
         revase:false,
         cookie:{
             maxAge: 60000 * 60,
-        }
+        },
+        store: MongoStore.create({
+            client:mongoose.connection.getClient(),
+        })
     })
 );
 app.use(express.urlencoded({extended: false}));

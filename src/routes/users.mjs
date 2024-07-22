@@ -33,7 +33,8 @@ router.get(
     '/v0/users',
     query("filter").isString().notEmpty().withMessage('Must not be empty')
         .isLength({min:3, max:10}).withMessage("Must be at least 3-10 characters"),
-    (request, response)=>{
+    (request, response)=>{ 
+        console.log(request.session.id);
         const result = validationResult(request);
         
         if( result.isEmpty ) return response.status(404).send(result);

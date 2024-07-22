@@ -4,6 +4,7 @@ import passport from "passport";
 import localStrategy from "passport-local";
 import session from "express-session";
 import {  } from "../utils/local-strategy.mjs";
+import { comparePassword } from "../utils/helpers.mjs";
 
 const router = Router();
 
@@ -22,8 +23,8 @@ router.post(
         } = request;
         const users = await User.find();
         const findUser = users.find( (user)=>user.userName===username );
-        
-        if( !findUser || findUser.password !== password) return response.status(401).send({msg:"Bad credential"});
+        console.log(password, findUser.password);
+        if( comparePassword(password, findUser.password) ) return response.status(401).send({msg:"Datos de acceso incorrectos!"});
 
         request.session.user = findUser;
         return response.status(200).send(findUser);
