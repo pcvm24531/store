@@ -7,6 +7,8 @@ import session from "express-session";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import MongoStore from "connect-mongo";
+import passport from "passport";
+import cokieParser from "cookie-parser";
 
 const app = express();
 
@@ -25,6 +27,8 @@ app.engine('hbs', engine({extname:'.hbs'}));
 app.set('view engine', 'hbs');
 app.set('views',path.join(__dirname,'views'));
 app.use(express.static(__dirname+'/public'));
+app.use(express.json());
+app.use(cokieParser("helloworld"));
 app.use(
     session({
         secret:"veryGoodSecret",
@@ -34,13 +38,15 @@ app.use(
             maxAge: 60000 * 60,
         },
         store: MongoStore.create({
-            client:mongoose.connection.getClient(),
+            client: mongoose.connection.getClient(),
         })
     })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.urlencoded({extended: false}));
 
-app.use(express.json());
+
 app.use(routes);
 
 
@@ -48,12 +54,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
     console.log(`Runnin on port ${PORT}`);
 });
-
-//Creación middleware
-const logginMiddleware = (request, response, next)=>{
-    console.log(`${request.method}-${request.url}`);
-    next();
-}
 
 app.get(
     '/v0',

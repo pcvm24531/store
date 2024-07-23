@@ -23,7 +23,7 @@ router.post(
         } = request;
         const users = await User.find();
         const findUser = users.find( (user)=>user.userName===username );
-        console.log(password, findUser.password);
+        
         if( comparePassword(password, findUser.password) ) return response.status(401).send({msg:"Datos de acceso incorrectos!"});
 
         request.session.user = findUser;
