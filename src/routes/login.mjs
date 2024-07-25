@@ -10,10 +10,10 @@ router.get(
                 console.log(err);
                 throw err;
             }
-            console.log(sessionData);
+            //console.log(sessionData);
         });
         request.session.visited=true;
-        console.log(request.session);
+        //console.log(request.session);
         response.status(200).render('login', {tittle:'Login'});
     }
 );

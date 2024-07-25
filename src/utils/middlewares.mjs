@@ -44,5 +44,5 @@ export const resolveIndexByProductsId = async (request, response, next)=>{
 
 export const isLoggedIn = ( request, response, next )=>{
     if( request.isAuthenticated() ) return next();
-    response.redirect('/login');
+    response.redirect('/v0/login');
 }
