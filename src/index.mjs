@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import cokieParser from "cookie-parser";
-import { isLoggedIn } from "./utils/middlewares.mjs";
+//import { isLoggedIn } from "./utils/middlewares.mjs";
 
 const app = express();
 
@@ -58,7 +58,7 @@ app.listen(PORT, ()=>{
 
 app.get(
     '/v0',
-    isLoggedIn,
+    //isLoggedIn,
     (request, response)=>{
         response.render('index', {tittle:'Store'})
     }
