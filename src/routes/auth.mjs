@@ -1,9 +1,6 @@
 import { Router } from "express";
 import { User } from "../mongoose/schemas/user.mjs";
 import passport from "passport";
-import localStrategy from "passport-local";
-import session from "express-session";
-import {  } from "../utils/local-strategy.mjs";
 import { comparePassword } from "../utils/helpers.mjs";
 
 const router = Router();
@@ -26,7 +23,7 @@ router.post(
 
         request.session.user = findUser;
         //return response.status(200).send(findUser);
-        response.render('index', {tittle: 'Home'} );
+        response.render('home',{title:'Home'});
     }
 );
 router.get(

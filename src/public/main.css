@@ -67,7 +67,7 @@ form input:not( [type="submit"] ){
     display: block;
     width: 100%;
     padding: 15px;
-    border-radius: 9px;
+    border-radius: 8px;
     background-color: rgba(0,0,0,0.2);
     box-shadow: 0px 0px 0px rgba(0,0,0,0);
     transition: 0.4s;
@@ -78,7 +78,7 @@ form input:not( [type="submit"] ){
 form input:not([type="submit"])::placeholder{
     color: #ccc;
 }
-form input:not([type="submit"]):focus, input:not([type="submit"]):valid{
+form input:not([type="submit"]):focus, form input:not([type="submit"]):valid{
     background-color: #fff;
     box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
 }

@@ -37,6 +37,7 @@ passport.deserializeUser(
         try {
             const users = await User.find();
             const findUser = users.find( (user)=>user.id===id );
+            //const findUser = await User.findById( (id)=>User.id===id );
             if( !findUser ) throw new Error("Usuario no encontrado");
             done( null, findUser );
         } catch (error) {
