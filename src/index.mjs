@@ -64,7 +64,7 @@ app.get(
     '/v0',
     isAuthenticated,
     (request, response)=>{
-        response.render('home', {tittle:'Home'})
+        response.redirect('/v0/home');
     }
 );
 

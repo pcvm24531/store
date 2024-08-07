@@ -22,7 +22,6 @@ router.post(
         if( comparePassword(password, findUser.password) ) return response.status(401).send({msg:"Datos de acceso incorrectos!"});
 
         request.session.user = findUser;
-        //return response.status(200).send(findUser);
         response.render('home',{title:'Home'});
     }
 );

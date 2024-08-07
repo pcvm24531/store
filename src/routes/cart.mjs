@@ -1,5 +1,4 @@
 import { Router } from "express";
-import {  } from "../mongoose/schemas/user.mjs";
 
 const router = Router();
 
