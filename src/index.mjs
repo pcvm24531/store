@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import cokieParser from "cookie-parser";
+import { isAuthenticated } from "./utils/middlewares.mjs";
 
 const app = express();
 
@@ -23,8 +24,12 @@ mongoose
     .catch( (err)=>console.log(`Error:${err}`) );
 
     //Middleware
-app.engine('hbs', engine({extname:'.hbs'}));
-app.set('view engine', 'hbs');
+app.engine('.hbs', engine(
+    {
+        extname:'.hbs',
+    }
+));
+app.set('view engine', '.hbs');
 app.set('views',path.join(__dirname,'views'));
 app.use(express.static(__dirname+'/public'));
 app.use(express.json());
@@ -57,8 +62,9 @@ app.listen(PORT, ()=>{
 
 app.get(
     '/v0',
+    isAuthenticated,
     (request, response)=>{
-        response.render('index', {tittle:'Store'})
+        response.render('home', {tittle:'Home'})
     }
 );
 
