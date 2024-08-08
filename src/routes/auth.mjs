@@ -10,18 +10,19 @@ router.use(passport.session());
 
 router.post(
     '/v0/auth',
-    //passport.authenticate("local"),
     async (request, response)=>{
         const{ 
-            username,
-            password
-        } = request.body;
-        const findUser = await User.findOne( {userName: username} );
-        if( !findUser || !comparePassword(password, findUser.password) ) return response.status(401).send({msg:"Datos de acceso incorrectos!"});
+            body:{
+                username,
+                password
+            } 
+        } = request;
+        const findUser = await User.findOne( { userName: username } );
+        
+        if( comparePassword(password, findUser.password) ) return response.status(401).send({msg:"Datos de acceso incorrectos!"});
 
         request.session.user = findUser;
-        //return response.status(200).send(findUser);
-        response.render('partials/sidebar',{title:'Home'});
+        response.render('home',{title:'Home'});
     }
 );
 router.get(
