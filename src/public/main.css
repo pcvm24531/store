@@ -215,3 +215,9 @@ form input[type="submit"]{
     background: #ffffff2d;
     border-radius: 4px;
 }
+
+.enlaceSubmit{
+    background: none;
+    border: none;
+    cursor: pointer;
+}

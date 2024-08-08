@@ -65,7 +65,7 @@ app.get(
     '/v0',
     isAuthenticated,
     (request, response)=>{
-        response.redirect('/v0/home');
+        response.redirect('/v0/login');
     }
 );
 
