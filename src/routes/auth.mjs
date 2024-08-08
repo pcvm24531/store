@@ -21,7 +21,7 @@ router.post(
 
         request.session.user = findUser;
         //return response.status(200).send(findUser);
-        response.render('home',{title:'Home'});
+        response.render('partials/sidebar',{title:'Home'});
     }
 );
 router.get(

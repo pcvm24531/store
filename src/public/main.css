@@ -1,12 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Fira sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body{
-    background-color: #2f4960;
+    min-height: 100vh;
+    background-color: #d2d2d2;
     background-image: linear-gradient(to bottom rigth, #2f4960 10%, #102040);
 }
 
@@ -94,4 +97,121 @@ form input[type="submit"]{
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
+}
+
+
+/*INICIO MENU*/
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 85px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    background: #161a2d;
+    padding: 25px 20px;
+    transition: all 0.4s ease;
+}
+.sidebar:hover{
+    width: 260px;
+}
+.sidebar-header{
+    display:flex;
+    align-items: center;
+}
+.sidebar-header img{
+    width: 42px;
+    border-radius: 50%;
+}
+.sidebar-header h2{
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin-left: 23px;
+}
+.sidebar-links{
+    list-style: none;
+    margin-top: 20px;
+    height: 80%;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+.sidebar-links h4 span{
+    opacity: 0;
+}
+.sidebar:hover .sidebar-links h4 span{
+    opacity: 1;
+}
+.sidebar-links h4{
+    color: #fff;
+    font-weight: 500;
+    margin: 10px 0;
+    white-space: nowrap;
+    position: relative;
+}
+.sidebar-links .menu-separator{
+    position: absolute;
+    left:0;
+    top:50%;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(1);
+    transform: translateY(-50%);
+    background: #333578;
+    transform-origin: right;
+    transition-duration: 0.2s;
+}
+.sidebar:hover .sidebar-links .menu-separator{
+    transition-delay: 0s;
+    transform: scaleX(0);
+}
+.sidebar-links li a{
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    color: #dbd4d4e3;
+    font-weight: 500;
+    padding: 15px 20px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.sidebar-links li a:hover{
+    background: #ffffff2d;
+    color: fff;
+    border-radius: 4px;
+}
+.user-account{
+    margin-top: auto;
+    padding: 12px 10px;
+    margin-left: -10px;
+}
+.user-account .user-profile{
+    display: flex;
+    align-items: center;
+    color: #e5dede;
+}
+.user-profile img{
+    width: 42px;
+    border-radius: 50%;
+}
+.user-detail{
+    margin-left: 23px;
+    white-space: nowrap;
+}
+.user-profile h3{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.user-profile span{
+    font-size: 0.775rem;
+    font-weight: 600;
+    display: block;
+    margin-top: 0;
+}
+
+.sidebar:hover .user-account{
+    background: #ffffff2d;
+    border-radius: 4px;
 }
