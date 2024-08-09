@@ -19,10 +19,12 @@ router.post(
         } = request;
         const findUser = await User.findOne( { userName: username } );
         
-        if( comparePassword(password, findUser.password) ) return response.status(401).send({msg:"Datos de acceso incorrectos!"});
+        if( comparePassword(password, findUser.password) ){
+            return response.status(401).send({msg:"Datos de acceso incorrectos!"});
+        }
 
         request.session.user = findUser;
-        response.render('home',{title:'Home'});
+        response.redirect('home');
     }
 );
 router.get(
@@ -38,15 +40,13 @@ router.get(
         : response.status(401).send({msg:"No autentificado!"});
     }
 );
-router.post(
+router.get(
     "/v0/auth/logout",
     (request, response)=>{
-        if(!request.user) return response.sendStatus(401);
-
+        if(!request.session.user) return response.sendStatus(401);
         request.logout( (err)=>{
             if (err) return response.sendStatus(400);
-
-            response.send(200);
+            response.redirect('/v0/login');
         } );
     }
 );

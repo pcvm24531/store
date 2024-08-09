@@ -24,19 +24,20 @@ mongoose
     .catch( (err)=>console.log(`Error:${err}`) );
 
     //Middleware
-app.engine('.hbs', engine(
-    {
-        extname:'.hbs',
-    }
-));
-app.set('view engine', '.hbs');
+app.engine('hbs', engine({
+    defaultLayout: 'main',
+    extname:'hbs',
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    partialsDir: path.join(__dirname, 'views/partials')
+}));
+app.set('view engine', 'hbs');
 app.set('views',path.join(__dirname,'views'));
 app.use(express.static(__dirname+'/public'));
 app.use(express.json());
 app.use(cokieParser("helloworld"));
 app.use(
     session({
-        secret:"veryGoodSecret",
+        secret:"pharMana",
         saveUnitInitialized:true,
         revase:false,
         cookie:{
@@ -64,7 +65,7 @@ app.get(
     '/v0',
     isAuthenticated,
     (request, response)=>{
-        response.redirect('/v0/home');
+        response.redirect('/v0/login');
     }
 );
 
