@@ -28,7 +28,7 @@ body{
     border-radius: 16px;
     text-align: center;
 }
-form{
+.form-login{
     display: block;
     width: 100%;
     max-width: 400px;
@@ -37,7 +37,7 @@ form{
     box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
     border-radius: 16px;
 }
-form h1{
+.form-login h1{
     color: #fff;
     font-size: 36px;
     text-transform: uppercase;
@@ -51,22 +51,22 @@ form h1{
     color: #f00;
     box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
 }
-form .form-group{
+.form-login .form-group{
     margin-bottom: 30px;
 }
-form label{
+.form-login label{
     display: block;
     color: #eee;
     font-size: 14px;
     margin-bottom: 5px;
 }
-form input{
+.form-login input{
     appearance: none;
     background: none;
     outline: none;
     border: none;
 }
-form input:not( [type="submit"] ){
+.form-login input:not( [type="submit"] ){
     display: block;
     width: 100%;
     padding: 15px;
@@ -78,14 +78,14 @@ form input:not( [type="submit"] ){
     font-size: 18px;
     font-weight: 300;
 }
-form input:not([type="submit"])::placeholder{
+.form-login input:not([type="submit"])::placeholder{
     color: #ccc;
 }
-form input:not([type="submit"]):focus, form input:not([type="submit"]):valid{
+.form-login input:not([type="submit"]):focus, .form-login input:not([type="submit"]):valid{
     background-color: #fff;
     box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
 }
-form input[type="submit"]{
+.form-login input[type="submit"]{
     display: block;
     width: 100%;
     padding: 15px;
@@ -177,7 +177,22 @@ form input[type="submit"]{
     white-space: nowrap;
     text-decoration: none;
 }
+.sidebar-links li form{
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    color: #dbd4d4e3;
+    font-weight: 500;
+    padding: 15px 20px;
+    white-space: nowrap;
+    text-decoration: none;
+}
 .sidebar-links li a:hover{
+    background: #ffffff2d;
+    color: fff;
+    border-radius: 4px;
+}
+.sidebar-links li form:hover{
     background: #ffffff2d;
     color: fff;
     border-radius: 4px;
@@ -210,12 +225,10 @@ form input[type="submit"]{
     display: block;
     margin-top: 0;
 }
-
 .sidebar:hover .user-account{
     background: #ffffff2d;
     border-radius: 4px;
 }
-
 .enlaceSubmit{
     background: none;
     border: none;
