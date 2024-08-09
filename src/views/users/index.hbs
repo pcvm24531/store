@@ -1,0 +1,27 @@
+<div>
+    <h1>Empleados</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nro.</th>
+                <th>Empleado</th>
+                <th>Celular</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if users.length}}
+                {{#each users}}
+                    <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td></td>
+                    <td>Editar | Eliminar</td>
+                    </tr>
+                {{/each}}
+            {{else}}
+                <p>No se encontraron usuarios.</p>
+            {{/if}}
+        </tbody>
+    </table>
+</div>

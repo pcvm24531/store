@@ -12,7 +12,8 @@ router.get(
     async ( request, response )=>{
         const users = await User.find();
         try {
-            response.status(200).send(users);
+            response.render('users',{ users:users })
+            return true;
         } catch (error) {
             console.log( `Error: ${error}` );
             response.status(500).send('Error al obtener usuarios!');
