@@ -5,6 +5,7 @@ const router = Router();
 
 router.get(
     '/v0/login',
+    isAuthenticated,
     (request, response)=>{
         request.sessionStore.get(request.session.id, (err, sessionData)=>{
             if(err){
