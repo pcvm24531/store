@@ -13,10 +13,10 @@
             {{#if users.length}}
                 {{#each users}}
                     <tr>
-                        <td>1</td>
-                        <td>{{users.userName}}</td>
-                        <td></td>
-                        <td></td>
+                    <td>1</td>
+                    <td>{{name}} {{lastName}}</td>
+                    <td>{{phone}}</td>
+                    <td>Editar | Eliminar</td>
                     </tr>
                 {{/each}}
             {{else}}
@@ -25,4 +25,3 @@
         </tbody>
     </table>
 </div>
-{{users}}

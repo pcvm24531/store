@@ -11,11 +11,14 @@ import passport from "passport";
 import cokieParser from "cookie-parser";
 import { isAuthenticated } from "./utils/middlewares.mjs";
 
+//import 'foundation-sites/dist/css/foundation.min.css';
+//import 'foundation-sites/dist/js/foundation.min';
+
+
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-console.log('DirName:',__dirname);
 
 const DB_URI = process.env.DB_URI;
 mongoose
@@ -28,7 +31,11 @@ app.engine('hbs', engine({
     defaultLayout: 'main',
     extname:'hbs',
     layoutsDir: path.join(__dirname, 'views/layouts'),
-    partialsDir: path.join(__dirname, 'views/partials')
+    partialsDir: path.join(__dirname, 'views/partials'),
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
 }));
 app.set('view engine', 'hbs');//extension de los archivo
 app.set('views',path.join(__dirname,'views'));
