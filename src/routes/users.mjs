@@ -10,9 +10,9 @@ const router = Router();
 router.get(
     '/v0/users',
     async ( request, response )=>{
-        const users = await User.find();
+        const users = await User.find();        
         try {
-            response.render('users',{ users:users })
+            response.render('users',{users})
             return true;
         } catch (error) {
             console.log( `Error: ${error}` );

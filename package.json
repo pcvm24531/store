@@ -20,12 +20,17 @@
     "express-handlebars": "^7.1.2",
     "express-session": "^1.18.0",
     "express-validator": "^7.1.0",
+    "foundation-sites": "^6.8.1",
     "mongoose": "^8.4.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "css-loader": "^7.1.2",
+    "nodemon": "^3.1.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
   },
   "type": "module"
 }
