@@ -4,21 +4,15 @@ import routes from "./routes/index.mjs";
 import { mongoose } from "mongoose";
 import {engine} from "express-handlebars";
 import session from "express-session";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import cokieParser from "cookie-parser";
 import { isAuthenticated } from "./utils/middlewares.mjs";
-
-//import 'foundation-sites/dist/css/foundation.min.css';
-//import 'foundation-sites/dist/js/foundation.min';
-
+import __dirname from "./paths.mjs";
+import * as path from "path";
+console.log(__dirname);
 
 const app = express();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const DB_URI = process.env.DB_URI;
 mongoose
@@ -26,20 +20,27 @@ mongoose
     .then( ()=>console.log('DB Conectado!') )
     .catch( (err)=>console.log(`Error:${err}`) );
 
-    //Middleware
-app.engine('hbs', engine({
-    defaultLayout: 'main',
-    extname:'hbs',
-    layoutsDir: path.join(__dirname, 'views/layouts'),
-    partialsDir: path.join(__dirname, 'views/partials'),
-    runtimeOptions: {
-        allowProtoPropertiesByDefault: true,
-        allowProtoMethodsByDefault: true,
-    }
-}));
-app.set('view engine', 'hbs');//extension de los archivo
-app.set('views',path.join(__dirname,'views'));
-app.use(express.static(__dirname+'/public'));
+//Inicio estructura handlebars
+app.engine(
+    'hbs', 
+    engine(
+        {
+            defaultLayout: 'main',
+            extname:'.hbs',
+            layoutsDir: path.join(__dirname, 'views/layouts'),
+            partialsDir: path.join(__dirname, 'views/partials'),
+            runtimeOptions: {
+                allowProtoPropertiesByDefault: true,
+                allowProtoMethodsByDefault: true,
+            }
+        }
+    )
+);
+app.set('view engine', '.hbs');//extension de los archivo
+app.set('views', path.resolve(__dirname + "/views"));
+//Fin estructura handlebars
+
+app.use(express.static(__dirname+'\\public'));
 app.use(express.json());
 app.use(cokieParser("helloworld"));
 app.use(
