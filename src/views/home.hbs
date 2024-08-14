@@ -1,3 +1,6 @@
 <h1>Hola Bienvenido!</h1>
-
-{{> sidebar}}
+{{#if admin }}
+    {{> sidebar}}
+{{else}}
+    <p>No eres admin</p>
+{{/if}}

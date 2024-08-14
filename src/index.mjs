@@ -40,7 +40,10 @@ app.set('view engine', '.hbs');//extension de los archivo
 app.set('views', path.resolve(__dirname + "/views"));
 //Fin estructura handlebars
 
-app.use(express.static(__dirname+'\\public'));
+//Archivos estáticos
+app.use("/", express.static(__dirname + "/public"));
+
+
 app.use(express.json());
 app.use(cokieParser("helloworld"));
 app.use(
@@ -73,6 +76,7 @@ app.get(
     '/v0',
     isAuthenticated,
     (request, response)=>{
+        console.log(__dirname);
         response.redirect('/v0/login');
     }
 );

@@ -19,8 +19,9 @@ router.post(
         } = request;
         const findUser = await User.findOne( { userName: username } );
         
-        if( comparePassword(password, findUser.password) ){
+        if( !findUser || comparePassword(password, findUser.password) ){
             return response.status(401).send({msg:"Datos de acceso incorrectos!"});
+            response.redirect("login?error=InvalidCredentials");
         }
 
         request.session.user = findUser;
