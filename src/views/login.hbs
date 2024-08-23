@@ -2,6 +2,9 @@
     <div>
         <h1>Entrar</h1>
     </div>
+    {{#if error}}
+        <p>Error en credenciales</p>
+    {{/if}}
     <div class="form-group">
         <label for="username">Usuario</label>
         <input type="text" name="username" id="username" placeholder="Nombre de usuario" required />
