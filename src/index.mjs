@@ -8,9 +8,9 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 import cokieParser from "cookie-parser";
 import { isAuthenticated } from "./utils/middlewares.mjs";
-import __dirname from "./paths.mjs";
+import __dirname from "../paths.mjs";
 import * as path from "path";
-console.log(__dirname);
+console.log(__dirname );
 
 const app = express();
 
@@ -27,8 +27,8 @@ app.engine(
         {
             defaultLayout: 'main',
             extname:'.hbs',
-            layoutsDir: path.join(__dirname, 'views/layouts'),
-            partialsDir: path.join(__dirname, 'views/partials'),
+            layoutsDir: path.join(__dirname, '/src/views/layouts'),
+            partialsDir: path.join(__dirname, '/src/views/partials'),
             runtimeOptions: {
                 allowProtoPropertiesByDefault: true,
                 allowProtoMethodsByDefault: true,
@@ -37,7 +37,7 @@ app.engine(
     )
 );
 app.set('view engine', '.hbs');//extension de los archivo
-app.set('views', path.resolve(__dirname + "/views"));
+app.set('views', path.resolve(__dirname + "/src/views"));
 //Fin estructura handlebars
 
 //Archivos estáticos
@@ -73,11 +73,10 @@ app.listen(PORT, ()=>{
 });
 
 app.get(
-    '/v0',
+    '/',
     isAuthenticated,
     (request, response)=>{
-        console.log(__dirname);
-        response.redirect('/v0/login');
+        response.redirect('/login');
     }
 );
 

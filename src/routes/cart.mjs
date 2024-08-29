@@ -3,7 +3,7 @@ import { Router } from "express";
 const router = Router();
 
 router.post(
-    "/v0/cart",
+    "/cart",
     (request, response)=>{
         if( !request.session.user ) return response.sendStatus(401);
         const{body: item}=request;
@@ -20,7 +20,7 @@ router.post(
     }
 );
 router.get(
-    "/v0/cart",
+    "/cart",
     (request, response)=>{
         if( !request.session.user ) return response.sendStatus(401);
         return response.send(request.session.cart ?? []);

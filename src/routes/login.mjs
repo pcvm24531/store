@@ -4,7 +4,7 @@ import { isAuthenticated } from "../utils/middlewares.mjs";
 const router = Router();
 
 router.get(
-    '/v0/login',
+    '/login',
     isAuthenticated,
     (request, response)=>{
         const error = request.query.error ? request.query.error : '';

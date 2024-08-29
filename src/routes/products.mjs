@@ -9,7 +9,7 @@ const router = Router();
 
 
 router.get(
-    '/v0/products',
+    '/products',
     async (request, response)=>{
         const products = await Product.find();
         try {
@@ -21,7 +21,7 @@ router.get(
     }
 );
 router.get(
-    '/v0/products/:id',
+    '/products/:id',
     resolveIndexByProductsId,
     ( request, response )=>{
         const productIndex = parseInt(request.findProductIndex);
@@ -29,7 +29,7 @@ router.get(
     }
 );
 router.post(
-    '/v0/products',
+    '/products',
     checkSchema(createProductsValidationSchema),
     (request, response)=>{
         const result = validationResult(request);
@@ -43,7 +43,7 @@ router.post(
 );
 //Funcion para actualizar los datos de un producto
 router.patch(
-    '/v0/products/:id',
+    '/products/:id',
     resolveIndexByProductsId,
     (request, response)=>{
         const productIndex = parseInt(request.findProductIndex);
@@ -54,7 +54,7 @@ router.patch(
 );
 
 router.delete(
-    '/v0/products/:id',
+    '/products/:id',
     resolveIndexByProductsId,
     (request, response)=>{
         const productIndex = parseInt(request.findProductIndex);

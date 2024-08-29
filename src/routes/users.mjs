@@ -8,12 +8,13 @@ import { hashPassword } from "../utils/helpers.mjs";
 const router = Router();
 
 router.get(
-    '/v0/users',
+    '/users',
     async ( request, response )=>{
         const users = await User.find();        
         try {
-            response.render('users',{users})
-            return true;
+            //response.render('users',{users})
+            //return true;
+            return response.status(200).send({users});
         } catch (error) {
             console.log( `Error: ${error}` );
             response.status(500).send('Error al obtener usuarios!');
@@ -23,7 +24,7 @@ router.get(
 
 //Get user by id
 router.get(
-    '/v0/users/:id',
+    '/users/:id',
     resolveIndexByUserId,
     async (request, response)=>{
         response.send(mockUsers[parseInt(request.findUserIndex)]);
@@ -31,7 +32,7 @@ router.get(
 );
 
 router.get(
-    '/v0/users',
+    '/users',
     query("filter").isString().notEmpty().withMessage('Must not be empty')
         .isLength({min:3, max:10}).withMessage("Must be at least 3-10 characters"),
     (request, response)=>{ 
@@ -51,7 +52,7 @@ router.get(
 );
 //Agrega un nuevo registro
 router.post(
-    '/v0/users',
+    '/users',
     checkSchema(createUserValidationSchema),
     async ( request, response )=>{
         //Obtenemos el resultado del schema de validadción
@@ -76,7 +77,7 @@ router.post(
 
 //Modifica por completo todos los datos del registro
 router.put(
-    '/v0/users/:id',
+    '/users/:id',
     resolveIndexByUserId,
     (request, response)=>{
         const { body, findUserIndex } = request;
@@ -87,7 +88,7 @@ router.put(
 
 //PATCH actualiza específicamente el campo sin tocar los otros campos
 router.patch(
-    '/v0/users/:id',
+    '/users/:id',
     resolveIndexByUserId,
     (request, response)=>{
         const { body, findUserIndex } = request;
@@ -97,7 +98,7 @@ router.patch(
 );
 
 router.delete(
-    '/v0/users/:id',
+    '/users/:id',
     resolveIndexByUserId,
     (request, response)=>{
         const {body, findUserIndex} = request;

@@ -9,7 +9,7 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 router.post(
-    '/v0/auth',
+    '/auth',
     async (request, response)=>{
         const{ 
             body:{
@@ -28,9 +28,9 @@ router.post(
     }
 );
 router.get(
-    "/v0/auth/status",
+    "/auth/status",
     (request, response)=>{
-        console.log(`Dentro de /v0/auth/status endpoit`);
+        console.log(`Dentro de /auth/status endpoit`);
         console.log(request.user);
         request.sessionStore.get(request.sessionID, (err, session)=>{
             console.log(session);
@@ -41,12 +41,12 @@ router.get(
     }
 );
 router.get(
-    "/v0/auth/logout",
+    "/auth/logout",
     (request, response)=>{
         if(!request.session.user) return response.sendStatus(401);
         request.logout( (err)=>{
             if (err) return response.sendStatus(400);
-            response.redirect('/v0/login');
+            response.redirect('/login');
         } );
     }
 );
