@@ -20,7 +20,13 @@ router.post(
         const findUser = await User.findOne( { userName: username } );
         
         if( !findUser || comparePassword(password, findUser.password) ){
-            return response.status(401).send({msg:"Datos de acceso incorrectos!"});
+            return response.render(
+                'login',
+                {
+                    errorMsg: 'Datos de acceso incorrectos!',
+                    username: username
+                }
+            );
         }
 
         request.session.user = findUser;
