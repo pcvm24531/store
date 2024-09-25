@@ -5,7 +5,6 @@ const router = Router();
 router.get(
     '/home', 
     (request, response)=>{
-        console.log(request.session.user);        
         if( request.session.user ) {
             const usuario = request.session.user.name;
             response.render(
@@ -13,7 +12,7 @@ router.get(
                 {
                     tittle:'Bienvenido',
                      usuario:usuario,
-                     admin:(request.session.user.position==='Dueño'?true:false)
+                     admin:(request.session.user.position==='admin'?true:false),
                 });
         } else {
             response.redirect('/login');

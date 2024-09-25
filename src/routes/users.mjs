@@ -8,13 +8,13 @@ import { hashPassword } from "../utils/helpers.mjs";
 const router = Router();
 
 router.get(
-    '/users',
-    async ( request, response )=>{
-        const users = await User.find();        
-        try {
-            //response.render('users',{users})
-            //return true;
-            return response.status(200).send({users});
+    '/users',    async ( request, response )=>{
+        try {            
+            //return response.status(200).render('users',{users});
+            const users = await User.find();        
+            return response.status(200).render('/partials/users/index',{
+                users
+            });
         } catch (error) {
             console.log( `Error: ${error}` );
             response.status(500).send('Error al obtener usuarios!');

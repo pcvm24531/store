@@ -18,15 +18,14 @@ router.post(
             } 
         } = request;
         const findUser = await User.findOne( { userName: username } );
+        //Si no existe usuario retornamos al login
+        if( !findUser ){
+            return response.redirect(`/login?error=Datos de acceso incorrectos!`);
+        }
         
-        if( !findUser || comparePassword(password, findUser.password) ){
-            return response.render(
-                'login',
-                {
-                    errorMsg: 'Datos de acceso incorrectos!',
-                    username: username
-                }
-            );
+        //Si la contraseña recibida es la misma a la de la DB
+        if( !comparePassword(password, findUser.password) ){
+            return response.redirect(`/login?error=La contraseña es incorrecta!`);
         }
 
         request.session.user = findUser;
